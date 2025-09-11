@@ -2,48 +2,237 @@ import type { Meta, StoryObj } from '@storybook/nextjs';
 import { Loader2, Mail } from 'lucide-react';
 
 import { Badge } from '@repo/design-system/components/ui/badge';
-import { Button } from '@repo/design-system/components/ui/button';
+import {
+  ButtonCustomizable,
+  type ButtonCustomizableProps,
+} from './button-custom';
 
 /**
  * Displays a button or a component that looks like a button.
  */
 const meta = {
   title: 'design-system/Components/Button/Button',
-  component: Button,
+  component: ButtonCustomizable,
   tags: ['autodocs'],
   args: {
     children: 'Button',
     variant: 'default',
     size: 'default',
+    disabled: false,
   },
   parameters: {
     layout: 'centered',
+    controls: {
+      include: [
+        'children',
+        'variant',
+        'size',
+        'disabled',
+        'backgroundColor',
+        'textColor',
+        'borderColor',
+        'borderRadius',
+        'fontSize',
+        'fontWeight',
+        'boxShadow',
+      ],
+    },
   },
   argTypes: {
     children: {
       control: 'text',
+      description: 'The content of the button',
+      table: {
+        type: { summary: 'ReactNode' },
+        defaultValue: { summary: 'Button' },
+      },
     },
     variant: {
       control: 'select',
+      description: 'The visual style variant of the button',
       options: [
         'default',
-        'destructive',
-        'outline',
         'secondary',
+        'outline',
+        'destructive',
         'ghost',
         'link',
+        'social',
       ],
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'default' },
+      },
     },
     size: {
       control: 'select',
-      options: ['default', 'sm', 'lg', 'icon'],
+      description: 'The size of the button',
+      options: ['default', 'sm', 'lg', 'icon', 'social'],
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'default' },
+      },
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Whether the button is disabled',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    asChild: {
+      control: 'boolean',
+      description:
+        'Change the default rendered element for the one passed as a child',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    // Custom styling controls
+    backgroundColor: {
+      control: 'color',
+      description: 'Custom background color (overrides theme)',
+      table: {
+        type: { summary: 'string' },
+        category: 'Custom Styling',
+      },
+    },
+    textColor: {
+      control: 'color',
+      description: 'Custom text color (overrides theme)',
+      table: {
+        type: { summary: 'string' },
+        category: 'Custom Styling',
+      },
+    },
+    borderColor: {
+      control: 'color',
+      description: 'Custom border color (overrides theme)',
+      table: {
+        type: { summary: 'string' },
+        category: 'Custom Styling',
+      },
+    },
+    borderRadius: {
+      control: 'select',
+      description: 'Custom border radius (overrides theme)',
+      options: [
+        'rounded-none', // 0px
+        'rounded-sm', // 2px
+        'rounded', // 4px
+        'rounded-md', // 6px
+        'rounded-lg', // 8px
+        'rounded-xl', // 12px
+        'rounded-2xl', // 16px
+        'rounded-3xl', // 24px
+        'rounded-full', // 9999px
+      ],
+      table: {
+        type: { summary: 'string' },
+        category: 'Custom Styling',
+      },
+    },
+    fontSize: {
+      control: 'select',
+      description: 'Custom font size (overrides theme)',
+      options: [
+        'none',
+        'text-xs', // 12px
+        'text-sm', // 14px
+        'text-base', // 16px
+        'text-lg', // 18px
+        'text-xl', // 20px
+        'text-2xl', // 24px
+        'text-3xl', // 30px
+        'text-4xl', // 36px
+      ],
+      table: {
+        type: { summary: 'string' },
+        category: 'Custom Styling',
+      },
+    },
+    fontWeight: {
+      control: 'select',
+      description: 'Custom font weight (overrides theme)',
+      options: [
+        'none',
+        'font-thin', // 100
+        'font-extralight', // 200
+        'font-light', // 300
+        'font-normal', // 400
+        'font-medium', // 500
+        'font-semibold', // 600
+        'font-bold', // 700
+        'font-extrabold', // 800
+        'font-black', // 900
+      ],
+      table: {
+        type: { summary: 'string' },
+        category: 'Custom Styling',
+      },
+    },
+    boxShadow: {
+      control: 'select',
+      description: 'Custom box shadow (overrides theme)',
+      options: [
+        'none',
+        'shadow-sm', // 0 1px 2px 0 rgb(0 0 0 / 0.05)
+        'shadow', // 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)
+        'shadow-md', // 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)
+        'shadow-lg', // 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)
+        'shadow-xl', // 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)
+        'shadow-2xl', // 0 25px 50px -12px rgb(0 0 0 / 0.25)
+        'shadow-inner', // inset 0 2px 4px 0 rgb(0 0 0 / 0.05)
+      ],
+      table: {
+        type: { summary: 'string' },
+        category: 'Custom Styling',
+      },
+    },
+    // Hide internal props from controls
+    className: {
+      table: {
+        disable: true,
+      },
+    },
+    style: {
+      table: {
+        disable: true,
+      },
+    },
+    onClick: {
+      table: {
+        disable: true,
+      },
+    },
+    onMouseEnter: {
+      table: {
+        disable: true,
+      },
+    },
+    onMouseLeave: {
+      table: {
+        disable: true,
+      },
+    },
+    onFocus: {
+      table: {
+        disable: true,
+      },
+    },
+    onBlur: {
+      table: {
+        disable: true,
+      },
     },
   },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<ButtonCustomizableProps>;
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<ButtonCustomizableProps>;
 
 /**
  * The default form of the button, used for primary actions and commands.
@@ -106,10 +295,10 @@ export const Link: Story = {
  */
 export const Loading: Story = {
   render: (args) => (
-    <Button {...args}>
+    <ButtonCustomizable {...args}>
       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
       Button
-    </Button>
+    </ButtonCustomizable>
   ),
   args: {
     ...Outline.args,
@@ -123,9 +312,9 @@ export const Loading: Story = {
  */
 export const WithIcon: Story = {
   render: (args) => (
-    <Button {...args}>
+    <ButtonCustomizable {...args}>
       <Mail className="mr-2 h-4 w-4" /> Login with Email Button
-    </Button>
+    </ButtonCustomizable>
   ),
   args: {
     ...Secondary.args,
@@ -156,6 +345,11 @@ export const Large: Story = {
  * Use the "icon" size for a button with only an icon.
  */
 export const Icon: Story = {
+  render: (args) => (
+    <ButtonCustomizable {...args}>
+      <Mail />
+    </ButtonCustomizable>
+  ),
   args: {
     ...Secondary.args,
     size: 'icon',
@@ -184,38 +378,38 @@ export const MultiTenantDemo: Story = {
       </div>
       <div className="space-y-4">
         <div className="flex flex-wrap gap-4">
-          <Button {...args} variant="default">
+          <ButtonCustomizable {...args} variant="default">
             Primary
-          </Button>
-          <Button {...args} variant="secondary">
+          </ButtonCustomizable>
+          <ButtonCustomizable {...args} variant="secondary">
             Secondary
-          </Button>
-          <Button {...args} variant="outline">
+          </ButtonCustomizable>
+          <ButtonCustomizable {...args} variant="outline">
             Outline
-          </Button>
-          <Button {...args} variant="destructive">
+          </ButtonCustomizable>
+          <ButtonCustomizable {...args} variant="destructive">
             Destructive
-          </Button>
-          <Button {...args} variant="ghost">
+          </ButtonCustomizable>
+          <ButtonCustomizable {...args} variant="ghost">
             Ghost
-          </Button>
-          <Button {...args} variant="link">
+          </ButtonCustomizable>
+          <ButtonCustomizable {...args} variant="link">
             Link
-          </Button>
+          </ButtonCustomizable>
         </div>
         <div className="flex flex-wrap gap-4">
-          <Button {...args} size="sm">
+          <ButtonCustomizable {...args} size="sm">
             Small
-          </Button>
-          <Button {...args} size="default">
+          </ButtonCustomizable>
+          <ButtonCustomizable {...args} size="default">
             Default
-          </Button>
-          <Button {...args} size="lg">
+          </ButtonCustomizable>
+          <ButtonCustomizable {...args} size="lg">
             Large
-          </Button>
-          <Button {...args} size="icon">
+          </ButtonCustomizable>
+          <ButtonCustomizable {...args} size="icon">
             <Mail className="h-4 w-4" />
-          </Button>
+          </ButtonCustomizable>
         </div>
       </div>
     </div>
