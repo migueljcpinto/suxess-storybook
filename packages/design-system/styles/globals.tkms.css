@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
+.tenant-tkms {
   --radius: 0rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.2178 0 0);
@@ -45,7 +45,7 @@
   --map-cluster-background: var(--primary);
 }
 
-.dark {
+.tenant-tkms.dark {
   --background: oklch(0.3092 0 0);
   --foreground: oklch(0.8141 0 0);
   --card: oklch(0.2178 0 0);

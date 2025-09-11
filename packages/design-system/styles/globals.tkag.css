@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
+.tenant-tkag {
   --radius: 0.25rem;
   --background: oklch(0.985 0 0);
   --foreground: oklch(0 0 0);
@@ -46,7 +46,7 @@
   --map-cluster-background: var(--brand);
 }
 
-.dark {
+.tenant-tkag.dark {
   --background: oklch(0.1332 0.0434 259.64);
   --foreground: oklch(0.9542 0.0034 247.86);
   --card: oklch(0.2566 0.0856 255.35);
