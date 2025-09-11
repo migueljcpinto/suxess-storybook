@@ -1,6 +1,6 @@
-import { action } from 'storybook/actions';
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { toast } from 'sonner';
+import { action } from 'storybook/actions';
 
 import { Toaster } from '@repo/design-system/components/ui/sonner';
 

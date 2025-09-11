@@ -3,8 +3,10 @@ import { TooltipProvider } from '@repo/design-system/components/ui/tooltip';
 import { ThemeProvider } from '@repo/design-system/providers/theme';
 import { withThemeByClassName } from '@storybook/addon-themes';
 import type { Preview } from '@storybook/nextjs';
+// biome-ignore lint/correctness/noUnusedImports: React is needed for JSX in Storybook
+import React from 'react';
 
-import '@repo/design-system/styles/globals.css';
+import '@repo/design-system/styles/globals.base.css';
 
 const preview: Preview = {
   parameters: {

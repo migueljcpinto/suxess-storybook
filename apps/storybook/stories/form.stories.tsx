@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { action } from 'storybook/actions';
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useForm } from 'react-hook-form';
+import { action } from 'storybook/actions';
 import * as z from 'zod';
 
 import {
