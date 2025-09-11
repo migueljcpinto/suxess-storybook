@@ -204,3 +204,180 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ===== TKAG FONTS ===== */
+@font-face {
+  font-family: fiera;
+  src: url("/fonts/tkag/Fiera/FiraSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: fiera;
+  src: url("/fonts/tkag/Fiera/FiraSans-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: fiera;
+  src: url("/fonts/tkag/Fiera/FiraSans-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: fiera;
+  src: url("/fonts/tkag/Fiera/FiraSans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: tksunrise;
+  src: url("/fonts/tkag/TKSunrise.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: tktype;
+  src: url("/fonts/tkag/TK_Type/tktyperegular.woff2") format("woff2");
+  src: url("/fonts/tkag/TK_Type/tktyperegular.woff") format("woff");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: tktype;
+  src: url("/fonts/tkag/TK_Type/tktypemedium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: tktype;
+  src: url("/fonts/tkag/TK_Type/tktypebold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* ===== TKAG TYPOGRAPHY ===== */
+.tenant-tkag h1 {
+  @apply text-3xl sm:text-4xl lg:text-6xl;
+  font-family: var(--font-tktype, "tktype", sans-serif);
+}
+
+.tenant-tkag h2 {
+  @apply text-2xl md:text-3xl lg:text-4xl;
+  font-family: var(--font-tktype, "tktype", sans-serif);
+}
+
+.tenant-tkag h3 {
+  @apply text-xl;
+  font-family: var(--font-tktype, "tktype", sans-serif);
+}
+
+.tenant-tkag h4 {
+  @apply text-base;
+  font-family: var(--font-tktype, "tktype", sans-serif);
+}
+
+.tenant-tkag body {
+  font-family: var(--font-fiera, "fiera", sans-serif);
+}
+
+/* ===== TKAG UTILITIES ===== */
+@layer utilities {
+  .tenant-tkag .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .tenant-tkag .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tenant-tkag .after-underline {
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+  }
+
+  .tenant-tkag .after-underline::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.1em;
+    background-color: var(--brand);
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+    transition: opacity 500ms, transform 500ms
+      cubic-bezier(0.42, 0.96, 0.61, 0.86);
+  }
+
+  .tenant-tkag.dark .after-underline::after {
+    background-color: var(--accent-foreground);
+  }
+
+  .tenant-tkag .after-underline:hover::after,
+  .tenant-tkag .after-underline:focus::after,
+  .tenant-tkag .group:hover .group-hover-after-underline::after {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ===== TKAG PRINT STYLES ===== */
+@media print {
+  .tenant-tkag body {
+    width: 100%;
+    background-color: white;
+    color: black;
+  }
+
+  .tenant-tkag h1 {
+    font-size: 24px;
+  }
+
+  .tenant-tkag h2 {
+    font-size: 20px;
+  }
+
+  /* hide scrollbar */
+  .tenant-tkag * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .tenant-tkag *::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* better page break control */
+  .tenant-tkag h1,
+  .tenant-tkag h2,
+  .tenant-tkag h3,
+  .tenant-tkag h4,
+  .tenant-tkag h5,
+  .tenant-tkag h6,
+  .tenant-tkag img {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* manually disable page break where needed */
+  .tenant-tkag .print-no-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* hide usercentrics button */
+  .tenant-tkag #usercentrics-root {
+    display: none;
+  }
+}
