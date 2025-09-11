@@ -12,7 +12,6 @@ export const ThemeProvider = ({
     defaultTheme="system"
     enableSystem
     disableTransitionOnChange
-    suppressHydrationWarning
     {...properties}
   >
     {children}
