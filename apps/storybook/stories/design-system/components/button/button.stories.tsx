@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { Loader2, Mail } from 'lucide-react';
 
+import { Badge } from '@repo/design-system/components/ui/badge';
 import { Button } from '@repo/design-system/components/ui/button';
 
 /**
  * Displays a button or a component that looks like a button.
  */
 const meta = {
-  title: 'design-system/Base/Button',
+  title: 'design-system/Components/Button/Button',
   component: Button,
   tags: ['autodocs'],
   args: {
@@ -168,5 +169,63 @@ export const Icon: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
+  },
+};
+
+/**
+ * Multi-tenant demonstration - shows how buttons adapt to different tenants.
+ * Use the toolbar to switch between tenants and see the changes.
+ */
+export const MultiTenantDemo: Story = {
+  render: (args, { globals: { tenant } }) => (
+    <div className="space-y-6">
+      <div className="mb-4 text-muted-foreground text-sm">
+        Tenant: <Badge variant="secondary">{tenant || 'base'}</Badge>
+      </div>
+      <div className="space-y-4">
+        <div className="flex flex-wrap gap-4">
+          <Button {...args} variant="default">
+            Primary
+          </Button>
+          <Button {...args} variant="secondary">
+            Secondary
+          </Button>
+          <Button {...args} variant="outline">
+            Outline
+          </Button>
+          <Button {...args} variant="destructive">
+            Destructive
+          </Button>
+          <Button {...args} variant="ghost">
+            Ghost
+          </Button>
+          <Button {...args} variant="link">
+            Link
+          </Button>
+        </div>
+        <div className="flex flex-wrap gap-4">
+          <Button {...args} size="sm">
+            Small
+          </Button>
+          <Button {...args} size="default">
+            Default
+          </Button>
+          <Button {...args} size="lg">
+            Large
+          </Button>
+          <Button {...args} size="icon">
+            <Mail className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Multi-tenant demonstration - shows how buttons adapt to different tenants. Use the toolbar to switch between tenants and see the changes.',
+      },
+    },
   },
 };

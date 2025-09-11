@@ -7,7 +7,7 @@ import { Toggle } from '@repo/design-system/components/ui/toggle';
  * A two-state button that can be either on or off.
  */
 const meta: Meta<typeof Toggle> = {
-  title: 'design-system/base/Toggle',
+  title: 'design-system/Components/Toggle/Toggle',
   component: Toggle,
   tags: ['autodocs'],
   argTypes: {

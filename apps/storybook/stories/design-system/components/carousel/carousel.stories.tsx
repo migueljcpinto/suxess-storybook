@@ -12,7 +12,7 @@ import {
  * A carousel with motion and swipe built using Embla.
  */
 const meta: Meta<typeof Carousel> = {
-  title: 'design-system/base/Carousel',
+  title: 'design-system/Components/Carousel/Carousel',
   component: Carousel,
   tags: ['autodocs'],
   argTypes: {},

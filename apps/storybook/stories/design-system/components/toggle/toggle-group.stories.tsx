@@ -10,7 +10,7 @@ import {
  * A set of two-state buttons that can be toggled on or off.
  */
 const meta = {
-  title: 'design-system/base/ToggleGroup',
+  title: 'design-system/Components/ToggleGroup/ToggleGroup',
   component: ToggleGroup,
   tags: ['autodocs'],
   argTypes: {

@@ -6,7 +6,6 @@ import type { Preview } from '@storybook/nextjs';
 // biome-ignore lint/correctness/noUnusedImports: React is needed for JSX in Storybook
 import React from 'react';
 
-// Importar todos os estilos de tenants estaticamente
 import '@repo/design-system/styles/globals.base.css';
 import '@repo/design-system/styles/globals.tkag.css';
 import '@repo/design-system/styles/globals.tkms.css';
