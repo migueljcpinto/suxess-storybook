@@ -9,8 +9,8 @@ export const ThemeProvider = ({
 }: ThemeProviderProps) => (
   <NextThemeProvider
     attribute="class"
-    defaultTheme="system"
-    enableSystem
+    defaultTheme="light"
+    enableSystem={false}
     disableTransitionOnChange
     {...properties}
   >

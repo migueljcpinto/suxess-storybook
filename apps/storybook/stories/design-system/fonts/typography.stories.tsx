@@ -25,10 +25,10 @@ export const Headings: Story = {
         Tenant: <Badge variant="secondary">{tenant || 'base'}</Badge>
       </div>
       <div className="space-y-4">
-        <h1>Heading 1 - Título Principal</h1>
-        <h2>Heading 2 - Subtítulo</h2>
-        <h3>Heading 3 - Seção</h3>
-        <h4>Heading 4 - Subseção</h4>
+        <h1>Heading 1 - Main Title</h1>
+        <h2>Heading 2 - Subtitle</h2>
+        <h3>Heading 3 - Section</h3>
+        <h4>Heading 4 - Subsection</h4>
       </div>
     </div>
   ),
@@ -38,7 +38,7 @@ export const BodyText: Story = {
   render: (_, { globals: { tenant } }) => (
     <div className="max-w-2xl space-y-4">
       <div className="mb-4 text-muted-foreground text-sm">
-        Tenant atual: <Badge variant="secondary">{tenant || 'base'}</Badge>
+        Tenant: <Badge variant="secondary">{tenant || 'base'}</Badge>
       </div>
       <div className="space-y-4">
         <p>
@@ -51,8 +51,7 @@ export const BodyText: Story = {
         </p>
         <blockquote className="border-primary border-l-4 pl-4 italic">
           "This is an example quote that demonstrates how the text elements
-          behave in different tenants." texto se comportam em diferentes
-          tenants."
+          behave in different tenants." behave in different tenants." tenants."
         </blockquote>
       </div>
     </div>
@@ -120,7 +119,6 @@ export const ResponsiveTypography: Story = {
         <p className="text-base md:text-lg">
           This paragraph demonstrates how the typography adapts to different
           screen sizes, keeping the visual identity of the selected tenant.
-          tamanhos de tela, mantendo a identidade visual do tenant selecionado.
         </p>
       </div>
     </div>
