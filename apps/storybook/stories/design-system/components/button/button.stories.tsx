@@ -3,16 +3,28 @@ import { Loader2, Mail } from 'lucide-react';
 
 import { Badge } from '@repo/design-system/components/ui/badge';
 import {
-  ButtonCustomizable,
-  type ButtonCustomizableProps,
-} from './button-custom';
+  ButtonTenantAware,
+  type ButtonTenantAwareProps,
+} from './button-tenant-aware';
+
+// Import the AllVariants type
+type AllVariants =
+  | 'default'
+  | 'destructive'
+  | 'outline'
+  | 'secondary'
+  | 'ghost'
+  | 'link'
+  | 'social'
+  | 'inline-link'
+  | 'accent';
 
 /**
  * Displays a button or a component that looks like a button.
  */
 const meta = {
   title: 'design-system/Components/Button/Button',
-  component: ButtonCustomizable,
+  component: ButtonTenantAware,
   tags: ['autodocs'],
   args: {
     children: 'Button',
@@ -49,7 +61,7 @@ const meta = {
     },
     variant: {
       control: 'select',
-      description: 'The visual style variant of the button',
+      description: 'The visual style variant of the button (varies by tenant)',
       options: [
         'default',
         'secondary',
@@ -57,7 +69,9 @@ const meta = {
         'destructive',
         'ghost',
         'link',
-        'social',
+        'social', // Base only
+        'inline-link', // TKAG only
+        'accent', // TKMS only
       ],
       table: {
         type: { summary: 'string' },
@@ -228,11 +242,11 @@ const meta = {
       },
     },
   },
-} satisfies Meta<ButtonCustomizableProps>;
+} satisfies Meta<ButtonTenantAwareProps>;
 
 export default meta;
 
-type Story = StoryObj<ButtonCustomizableProps>;
+type Story = StoryObj<ButtonTenantAwareProps>;
 
 /**
  * The default form of the button, used for primary actions and commands.
@@ -295,10 +309,10 @@ export const Link: Story = {
  */
 export const Loading: Story = {
   render: (args) => (
-    <ButtonCustomizable {...args}>
+    <ButtonTenantAware {...args}>
       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
       Button
-    </ButtonCustomizable>
+    </ButtonTenantAware>
   ),
   args: {
     ...Outline.args,
@@ -312,9 +326,9 @@ export const Loading: Story = {
  */
 export const WithIcon: Story = {
   render: (args) => (
-    <ButtonCustomizable {...args}>
+    <ButtonTenantAware {...args}>
       <Mail className="mr-2 h-4 w-4" /> Login with Email Button
-    </ButtonCustomizable>
+    </ButtonTenantAware>
   ),
   args: {
     ...Secondary.args,
@@ -346,9 +360,9 @@ export const Large: Story = {
  */
 export const Icon: Story = {
   render: (args) => (
-    <ButtonCustomizable {...args}>
+    <ButtonTenantAware {...args}>
       <Mail />
-    </ButtonCustomizable>
+    </ButtonTenantAware>
   ),
   args: {
     ...Secondary.args,
@@ -371,45 +385,160 @@ export const Disabled: Story = {
  * Use the toolbar to switch between tenants and see the changes.
  */
 export const MultiTenantDemo: Story = {
-  render: (args, { globals: { tenant } }) => (
-    <div className="space-y-6">
-      <div className="mb-4 text-muted-foreground text-sm">
-        Tenant: <Badge variant="secondary">{tenant || 'base'}</Badge>
-      </div>
-      <div className="space-y-4">
-        <div className="flex flex-wrap gap-4">
-          <ButtonCustomizable {...args} variant="default">
-            Primary
-          </ButtonCustomizable>
-          <ButtonCustomizable {...args} variant="secondary">
-            Secondary
-          </ButtonCustomizable>
-          <ButtonCustomizable {...args} variant="outline">
-            Outline
-          </ButtonCustomizable>
-          <ButtonCustomizable {...args} variant="destructive">
-            Destructive
-          </ButtonCustomizable>
-          <ButtonCustomizable {...args} variant="ghost">
-            Ghost
-          </ButtonCustomizable>
-          <ButtonCustomizable {...args} variant="link">
-            Link
-          </ButtonCustomizable>
+  render: (args, { globals: { tenant } }) => {
+    const currentTenant = tenant || 'base';
+
+    // Get tenant-specific variants
+    const getTenantVariants = (tenant: string) => {
+      switch (tenant) {
+        case 'tkag':
+          return [
+            'default',
+            'secondary',
+            'outline',
+            'destructive',
+            'ghost',
+            'link',
+            'inline-link',
+          ];
+        case 'tkms':
+          return [
+            'default',
+            'secondary',
+            'outline',
+            'destructive',
+            'accent',
+            'ghost',
+            'link',
+          ];
+        default:
+          return [
+            'default',
+            'secondary',
+            'outline',
+            'destructive',
+            'ghost',
+            'link',
+            'social',
+          ];
+      }
+    };
+
+    const variants = getTenantVariants(currentTenant);
+
+    return (
+      <div className="space-y-6">
+        <div className="mb-4 text-muted-foreground text-sm">
+          Tenant: <Badge variant="secondary">{currentTenant}</Badge>
         </div>
-        <div className="flex flex-wrap gap-4">
-          <ButtonCustomizable {...args} size="sm">
-            Small
-          </ButtonCustomizable>
-          <ButtonCustomizable {...args} size="default">
+        <div className="space-y-4">
+          <div className="flex flex-wrap gap-4">
+            {variants.map((variant) => (
+              <ButtonTenantAware
+                key={variant}
+                {...args}
+                variant={variant as AllVariants}
+              >
+                {variant.charAt(0).toUpperCase() +
+                  variant.slice(1).replace('-', ' ')}
+              </ButtonTenantAware>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-4">
+            <ButtonTenantAware {...args} size="sm">
+              Small
+            </ButtonTenantAware>
+            <ButtonTenantAware {...args} size="default">
+              Default
+            </ButtonTenantAware>
+            <ButtonTenantAware {...args} size="lg">
+              Large
+            </ButtonTenantAware>
+            <ButtonTenantAware {...args} size="icon">
+              <Mail className="h-4 w-4" />
+            </ButtonTenantAware>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Multi-tenant demonstration - shows how buttons adapt to different tenants. Use the toolbar to switch between tenants and see the changes. Each tenant has different variants and styling.',
+      },
+    },
+  },
+};
+
+/**
+ * Tenant comparison - shows the same button variants across different tenants.
+ * This demonstrates how the same component adapts to different tenant requirements.
+ */
+export const TenantComparison: Story = {
+  render: (args) => (
+    <div className="space-y-8">
+      <h3 className="font-semibold text-lg">Button Variants Across Tenants</h3>
+      <p className="text-muted-foreground text-sm">
+        Use the toolbar to switch between tenants and see how the buttons adapt
+        automatically.
+      </p>
+
+      {/* Base Tenant */}
+      <div className="space-y-4">
+        <h4 className="font-medium text-base">Base Tenant</h4>
+        <div className="flex flex-wrap gap-3">
+          <ButtonTenantAware {...args} variant="default">
             Default
-          </ButtonCustomizable>
-          <ButtonCustomizable {...args} size="lg">
-            Large
-          </ButtonCustomizable>
-          <ButtonCustomizable {...args} size="icon">
-            <Mail className="h-4 w-4" />
-          </ButtonCustomizable>
+          </ButtonTenantAware>
+          <ButtonTenantAware {...args} variant="secondary">
+            Secondary
+          </ButtonTenantAware>
+          <ButtonTenantAware {...args} variant="outline">
+            Outline
+          </ButtonTenantAware>
+          <ButtonTenantAware {...args} variant="social">
+            Social
+          </ButtonTenantAware>
+        </div>
+      </div>
+
+      {/* TKAG Tenant */}
+      <div className="space-y-4">
+        <h4 className="font-medium text-base">TKAG Tenant</h4>
+        <div className="flex flex-wrap gap-3">
+          <ButtonTenantAware {...args} variant="default">
+            Default
+          </ButtonTenantAware>
+          <ButtonTenantAware {...args} variant="secondary">
+            Secondary
+          </ButtonTenantAware>
+          <ButtonTenantAware {...args} variant="outline">
+            Outline
+          </ButtonTenantAware>
+          <ButtonTenantAware {...args} variant="inline-link">
+            Inline Link
+          </ButtonTenantAware>
+        </div>
+      </div>
+
+      {/* TKMS Tenant */}
+      <div className="space-y-4">
+        <h4 className="font-medium text-base">TKMS Tenant</h4>
+        <div className="flex flex-wrap gap-3">
+          <ButtonTenantAware {...args} variant="default">
+            Default
+          </ButtonTenantAware>
+          <ButtonTenantAware {...args} variant="secondary">
+            Secondary
+          </ButtonTenantAware>
+          <ButtonTenantAware {...args} variant="outline">
+            Outline
+          </ButtonTenantAware>
+          <ButtonTenantAware {...args} variant="accent">
+            Accent
+          </ButtonTenantAware>
         </div>
       </div>
     </div>
@@ -418,7 +547,7 @@ export const MultiTenantDemo: Story = {
     docs: {
       description: {
         story:
-          'Multi-tenant demonstration - shows how buttons adapt to different tenants. Use the toolbar to switch between tenants and see the changes.',
+          'Comparison of button variants across different tenants. Use the toolbar to switch between tenants and see how the buttons adapt automatically.',
       },
     },
   },
