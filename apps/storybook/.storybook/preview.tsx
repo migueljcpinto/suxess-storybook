@@ -81,7 +81,9 @@ const preview: Preview = {
         (globals.tenant as (typeof TENANTS)[number]['value']) ?? 'base';
 
       const html = document.documentElement;
-      html.classList.remove('tenant-base', 'tenant-tkag', 'tenant-tkms');
+      for (const t of TENANTS) {
+        html.classList.remove(`tenant-${t.value}`);
+      }
       html.classList.add(`tenant-${selectedTenant}`);
       html.setAttribute('data-tenant', selectedTenant);
 
