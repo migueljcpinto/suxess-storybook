@@ -69,5 +69,6 @@ export const Size: Story = {
   ),
   args: {
     className: 'mx-12 w-full max-w-xs',
+    orientation: "horizontal"
   },
 };
