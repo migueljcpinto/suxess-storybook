@@ -10,59 +10,84 @@ import '@repo/design-system/styles/globals.base.css';
 import '@repo/design-system/styles/globals.tkag.css';
 import '@repo/design-system/styles/globals.tkms.css';
 
+const TENANTS = [
+  { value: 'base', title: 'Base', right: '🎨' },
+  { value: 'tkag', title: 'TKAG', right: '🏢' },
+  { value: 'tkms', title: 'TKMS', right: '🚀' },
+] as const;
+
+const THEMES = [
+  { value: 'light', title: 'Light', icon: 'sun' },
+  { value: 'dark', title: 'Dark', icon: 'moon' },
+] as const;
+
+const chromaticModes = Object.fromEntries(
+  TENANTS.flatMap((tenant) =>
+    THEMES.map((theme) => [
+      `${tenant.value}-${theme.value}`,
+      {
+        theme: theme.value,
+        tenant: tenant.value,
+        name: `${tenant.title} (${theme.title})`,
+      },
+    ])
+  )
+);
+
 const preview: Preview = {
   globalTypes: {
+    theme: {
+      name: 'Theme',
+      description: 'Select light/dark mode',
+      toolbar: {
+        title: 'Theme',
+        icon: 'circlehollow',
+        items: THEMES,
+        dynamicTitle: true,
+      },
+    },
     tenant: {
-      description: 'Selecione o tenant/cliente para visualizar os componentes',
+      name: 'Tenant',
+      description: 'Select the tenant/client',
       toolbar: {
         title: 'Tenant',
         icon: 'user',
-        items: [
-          { value: 'base', title: 'Base', right: '🎨' },
-          { value: 'tkag', title: 'TKAG', right: '🏢' },
-          { value: 'tkms', title: 'TKMS', right: '🚀' },
-        ],
+        items: TENANTS,
         dynamicTitle: true,
       },
     },
   },
   initialGlobals: {
+    theme: 'light',
     tenant: 'base',
   },
   parameters: {
     controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
+      matchers: { color: /(background|color)$/i, date: /Date$/i },
     },
     chromatic: {
-      modes: {
-        light: {
-          theme: 'light',
-          className: 'light',
-        },
-        dark: {
-          theme: 'dark',
-          className: 'dark',
-        },
-      },
+      modes: chromaticModes,
     },
   },
   decorators: [
     withThemeByClassName({
-      themes: {
-        light: 'light',
-        dark: 'dark',
-      },
+      themes: { light: 'light', dark: 'dark' },
       defaultTheme: 'light',
+      parentSelector: 'html',
     }),
-    (Story, context) => {
-      const selectedTenant = context.globals.tenant || 'base';
+
+    (Story, { globals }) => {
+      const selectedTenant =
+        (globals.tenant as (typeof TENANTS)[number]['value']) ?? 'base';
+
+      const html = document.documentElement;
+      html.classList.remove('tenant-base', 'tenant-tkag', 'tenant-tkms');
+      html.classList.add(`tenant-${selectedTenant}`);
+      html.setAttribute('data-tenant', selectedTenant);
 
       return (
-        <div className={`bg-background tenant-${selectedTenant}`}>
-          <ThemeProvider>
+        <div className={`tenant-${selectedTenant}`}>
+          <ThemeProvider forcedTheme={globals.theme as 'light' | 'dark'}>
             <TooltipProvider>
               <Story />
             </TooltipProvider>
@@ -73,5 +98,4 @@ const preview: Preview = {
     },
   ],
 };
-
 export default preview;
