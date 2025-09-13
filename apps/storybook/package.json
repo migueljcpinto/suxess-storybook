@@ -31,7 +31,6 @@
     "@storybook/addon-a11y": "^9.1.5",
     "@storybook/addon-docs": "^10.0.0-beta.2",
     "@storybook/addon-onboarding": "^10.0.0-beta.2",
-    "@storybook/addon-themes": "^10.0.0-beta.2",
     "@storybook/nextjs": "^10.0.0-beta.2",
     "@types/node": "^22",
     "@types/react": "^19",

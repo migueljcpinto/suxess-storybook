@@ -1,7 +1,6 @@
 import { Toaster } from '@repo/design-system/components/ui/sonner';
 import { TooltipProvider } from '@repo/design-system/components/ui/tooltip';
 import { ThemeProvider } from '@repo/design-system/providers/theme';
-import { withThemeByClassName } from '@storybook/addon-themes';
 import type { Preview } from '@storybook/nextjs';
 // biome-ignore lint/correctness/noUnusedImports: React is needed for JSX in Storybook
 import React from 'react';
@@ -70,32 +69,20 @@ const preview: Preview = {
     },
   },
   decorators: [
-    withThemeByClassName({
-      themes: { light: 'light', dark: 'dark' },
-      defaultTheme: 'light',
-      parentSelector: 'html',
-    }),
-
     (Story, { globals }) => {
       const selectedTenant =
         (globals.tenant as (typeof TENANTS)[number]['value']) ?? 'base';
-
-      const html = document.documentElement;
-      for (const t of TENANTS) {
-        html.classList.remove(`tenant-${t.value}`);
-      }
-      html.classList.add(`tenant-${selectedTenant}`);
-      html.setAttribute('data-tenant', selectedTenant);
+      const selectedTheme = (globals.theme as 'light' | 'dark') ?? 'light';
 
       return (
-        <div className={`tenant-${selectedTenant}`}>
-          <ThemeProvider forcedTheme={globals.theme as 'light' | 'dark'}>
+        <ThemeProvider forcedTheme={selectedTheme}>
+          <div className={`tenant-${selectedTenant} ${selectedTheme}`}>
             <TooltipProvider>
               <Story />
             </TooltipProvider>
             <Toaster />
-          </ThemeProvider>
-        </div>
+          </div>
+        </ThemeProvider>
       );
     },
   ],

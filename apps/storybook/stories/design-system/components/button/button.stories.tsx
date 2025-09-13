@@ -7,7 +7,6 @@ import {
   type ButtonTenantAwareProps,
 } from './button-tenant-aware';
 
-// Import the AllVariants type
 type AllVariants =
   | 'default'
   | 'destructive'
@@ -19,9 +18,6 @@ type AllVariants =
   | 'inline-link'
   | 'accent';
 
-/**
- * Displays a button or a component that looks like a button.
- */
 const meta = {
   title: 'design-system/Components/Button/Button',
   component: ButtonTenantAware,
