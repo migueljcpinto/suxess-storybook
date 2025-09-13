@@ -1,11 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { Loader2, Mail } from 'lucide-react';
+import type * as React from 'react';
 
 import { Badge } from '@repo/design-system/components/ui/badge';
-import {
-  ButtonTenantAware,
-  type ButtonTenantAwareProps,
-} from './button-tenant-aware';
+import { Button } from '@repo/design-system/components/ui/button';
 
 type AllVariants =
   | 'default'
@@ -18,9 +16,11 @@ type AllVariants =
   | 'inline-link'
   | 'accent';
 
+type ButtonProps = React.ComponentProps<typeof Button>;
+
 const meta = {
   title: 'design-system/Components/Button/Button',
-  component: ButtonTenantAware,
+  component: Button,
   tags: ['autodocs'],
   args: {
     children: 'Button',
@@ -238,11 +238,11 @@ const meta = {
       },
     },
   },
-} satisfies Meta<ButtonTenantAwareProps>;
+} satisfies Meta<ButtonProps>;
 
 export default meta;
 
-type Story = StoryObj<ButtonTenantAwareProps>;
+type Story = StoryObj<ButtonProps>;
 
 /**
  * The default form of the button, used for primary actions and commands.
@@ -305,10 +305,10 @@ export const Link: Story = {
  */
 export const Loading: Story = {
   render: (args) => (
-    <ButtonTenantAware {...args}>
+    <Button {...args}>
       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
       Button
-    </ButtonTenantAware>
+    </Button>
   ),
   args: {
     ...Outline.args,
@@ -322,9 +322,9 @@ export const Loading: Story = {
  */
 export const WithIcon: Story = {
   render: (args) => (
-    <ButtonTenantAware {...args}>
+    <Button {...args}>
       <Mail className="mr-2 h-4 w-4" /> Login with Email Button
-    </ButtonTenantAware>
+    </Button>
   ),
   args: {
     ...Secondary.args,
@@ -356,9 +356,9 @@ export const Large: Story = {
  */
 export const Icon: Story = {
   render: (args) => (
-    <ButtonTenantAware {...args}>
+    <Button {...args}>
       <Mail />
-    </ButtonTenantAware>
+    </Button>
   ),
   args: {
     ...Secondary.args,
@@ -430,29 +430,25 @@ export const MultiTenantDemo: Story = {
         <div className="space-y-4">
           <div className="flex flex-wrap gap-4">
             {variants.map((variant) => (
-              <ButtonTenantAware
-                key={variant}
-                {...args}
-                variant={variant as AllVariants}
-              >
+              <Button key={variant} {...args} variant={variant as AllVariants}>
                 {variant.charAt(0).toUpperCase() +
                   variant.slice(1).replace('-', ' ')}
-              </ButtonTenantAware>
+              </Button>
             ))}
           </div>
           <div className="flex flex-wrap gap-4">
-            <ButtonTenantAware {...args} size="sm">
+            <Button {...args} size="sm">
               Small
-            </ButtonTenantAware>
-            <ButtonTenantAware {...args} size="default">
+            </Button>
+            <Button {...args} size="default">
               Default
-            </ButtonTenantAware>
-            <ButtonTenantAware {...args} size="lg">
+            </Button>
+            <Button {...args} size="lg">
               Large
-            </ButtonTenantAware>
-            <ButtonTenantAware {...args} size="icon">
+            </Button>
+            <Button {...args} size="icon">
               <Mail className="h-4 w-4" />
-            </ButtonTenantAware>
+            </Button>
           </div>
         </div>
       </div>

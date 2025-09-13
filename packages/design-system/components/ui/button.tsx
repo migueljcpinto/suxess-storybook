@@ -20,12 +20,17 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        // Tenant-specific variants
+        social: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+        "inline-link": "text-primary underline-offset-4 hover:underline",
+        accent: "bg-accent text-accent-foreground shadow-xs hover:bg-accent/80",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
+        social: "h-9 px-4 py-2 has-[>svg]:px-3",
       },
     },
     defaultVariants: {
@@ -40,17 +45,47 @@ function Button({
   variant,
   size,
   asChild = false,
+  backgroundColor,
+  textColor,
+  borderColor,
+  borderRadius,
+  fontSize,
+  fontWeight,
+  boxShadow,
+  style,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
+    backgroundColor?: string
+    textColor?: string
+    borderColor?: string
+    borderRadius?: string
+    fontSize?: string
+    fontWeight?: string
+    boxShadow?: string
   }) {
   const Comp = asChild ? Slot : "button"
+
+  // Build custom styles object
+  const customStyles: React.CSSProperties = {
+    ...style,
+    ...(backgroundColor && { backgroundColor }),
+    ...(textColor && { color: textColor }),
+    ...(borderColor && { borderColor }),
+  }
+
+  // Build custom classes
+  const customClasses = [borderRadius, fontSize, fontWeight, boxShadow]
+    .filter(Boolean)
+    .join(' ')
 
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      data-variant={variant}
+      className={cn(buttonVariants({ variant, size, className }), customClasses)}
+      style={customStyles}
       {...props}
     />
   )

@@ -332,6 +332,51 @@
   }
 }
 
+/* ===== TKAG BUTTON VARIANTS ===== */
+.tenant-tkag [data-slot="button"] {
+  @apply rounded-full cursor-pointer;
+}
+
+.tenant-tkag [data-slot="button"][data-variant="default"] {
+  @apply bg-brand text-white hover:bg-primary-foreground;
+}
+
+.tenant-tkag [data-slot="button"][data-variant="outline"] {
+  @apply border-brand bg-transparent text-primary-foreground hover:border-black hover:bg-black hover:text-white;
+}
+
+.tenant-tkag [data-slot="button"][data-variant="link"] {
+  @apply overflow-hidden whitespace-normal rounded-none;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
+
+.tenant-tkag [data-slot="button"][data-variant="link"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0.1em;
+  background-color: var(--brand);
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+  transition: opacity 500ms, transform 500ms
+    cubic-bezier(0.42, 0.96, 0.61, 0.86);
+}
+
+.tenant-tkag [data-slot="button"][data-variant="link"]:hover::after,
+.tenant-tkag [data-slot="button"][data-variant="link"]:focus::after {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.tenant-tkag [data-slot="button"][data-variant="inline-link"] {
+  @apply overflow-hidden whitespace-normal rounded-none text-brand underline hover:decoration-brand;
+}
+
 /* ===== TKAG PRINT STYLES ===== */
 @media print {
   .tenant-tkag body {
