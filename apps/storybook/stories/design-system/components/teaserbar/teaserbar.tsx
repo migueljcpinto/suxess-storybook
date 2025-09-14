@@ -5,9 +5,8 @@ import { cn } from '@repo/design-system/lib/utils';
 import { ArrowRightIcon } from 'lucide-react';
 import { useState } from 'react';
 import type { JobadComponentProps } from '../../types/job-common';
-import { NewsletterModal } from '../newsletter/newsletter-modal-tkag';
-import TeaserBarWrapper from './teaserbar-wrapper-tkag';
-import { TeaserCard } from './teasercard-tkag';
+import TeaserBarWrapper from './teaserbar-wrapper';
+import { TeaserCard } from './teasercard';
 
 export function TeaserBar(_props?: JobadComponentProps) {
   const [open, onOpenChange] = useState(false);
@@ -49,8 +48,7 @@ export function TeaserBar(_props?: JobadComponentProps) {
         <TeaserCard
           onClick={() => onOpenChange(!open)}
           onMouseEnter={() => {
-            import('../newsletter/newsletter-filterbar-tkag');
-            import('../newsletter/newsletter-form-tkag');
+            // Newsletter hover handler
           }}
           src="images/teaserbar/newsletter.jpg"
         >
@@ -68,11 +66,6 @@ export function TeaserBar(_props?: JobadComponentProps) {
           </p>
         </TeaserCard>
       </TeaserBarWrapper>
-      <NewsletterModal
-        className="border-none bg-transparent! py-0! font-normal text-card-foreground text-xl shadow-none"
-        onOpenChange={onOpenChange}
-        open={open}
-      />
     </>
   );
 }

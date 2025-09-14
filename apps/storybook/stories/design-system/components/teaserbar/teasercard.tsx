@@ -1,8 +1,8 @@
-import { CustomImage } from "@repo/design-system/components/ui/custom-image";
-import { CustomLink } from "@repo/design-system/components/ui/custom-link";
-import type { ReactNode } from "react";
-import { Card } from "~/components/ui/card-tkag";
-import { CornerBox } from "~/components/ui/corner-box-tkag";
+import { Card } from '@repo/design-system/components/ui/card';
+import { CustomImage } from '@repo/design-system/components/ui/custom-image';
+import { CustomLink } from '@repo/design-system/components/ui/custom-link';
+import type { ReactNode } from 'react';
+import { CornerBox } from './teasercard-corner-box';
 
 type BaseProps = {
   src: string;

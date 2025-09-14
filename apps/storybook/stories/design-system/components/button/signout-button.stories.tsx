@@ -9,7 +9,7 @@ const meta: Meta<typeof SignOut> = {
     docs: {
       description: {
         component:
-          'Botão de logout que redireciona o usuário para a página de login. Utiliza o Next.js Router para navegação.',
+          'Logout button that redirects the user to the login page. Uses the Next.js Router for navigation.',
       },
     },
     nextjs: {
@@ -22,7 +22,7 @@ const meta: Meta<typeof SignOut> = {
   },
   argTypes: {
     variant: {
-      description: 'Variante visual do botão',
+      description: 'Visual variant of the button',
       control: 'select',
       options: [
         'default',
@@ -34,16 +34,16 @@ const meta: Meta<typeof SignOut> = {
       ],
     },
     size: {
-      description: 'Tamanho do botão',
+      description: 'Size of the button',
       control: 'select',
       options: ['default', 'sm', 'lg', 'icon'],
     },
     disabled: {
-      description: 'Se o botão está desabilitado',
+      description: 'If the button is disabled',
       control: 'boolean',
     },
     className: {
-      description: 'Classes CSS adicionais',
+      description: 'Additional CSS classes',
       control: 'text',
     },
   },
@@ -53,7 +53,6 @@ const meta: Meta<typeof SignOut> = {
 export default meta;
 type Story = StoryObj<typeof SignOut>;
 
-// Story básica
 export const Default: Story = {
   args: {
     variant: 'default',

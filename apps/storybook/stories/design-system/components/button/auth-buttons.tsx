@@ -12,7 +12,7 @@ export function SignOut({ className, ...rest }: ButtonProps) {
       {...rest}
       className={cn(className)}
       onClick={() => () => {
-        router.push('/sign-in'); // redirect to login page
+        router.push('/');
       }}
     >
       Log out
