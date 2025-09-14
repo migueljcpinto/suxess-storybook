@@ -36,6 +36,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "chromatic": "^12.0.0",
+    "msw": "^2.11.2",
+    "msw-storybook-addon": "^2.0.5",
     "postcss": "^8",
     "storybook": "^10.0.0-beta.2",
     "tailwindcss": "^4.1.7",

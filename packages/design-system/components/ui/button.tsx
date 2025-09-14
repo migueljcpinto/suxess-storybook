@@ -4,6 +4,8 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@repo/design-system/lib/utils"
 
+
+
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
@@ -28,17 +30,37 @@ const buttonVariants = cva(
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9",
-        social: "h-9 px-4 py-2 has-[>svg]:px-3",
+        lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
+        icon: 'size-9',
+        social: 'h-9 px-4 py-2 has-[>svg]:px-3',
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: 'default',
       size: "default",
     },
-  }
+  },
 )
+
+
+  export type ButtonProps = VariantProps<typeof buttonVariants> & React.ComponentProps<'button'> & {
+    asChild?: boolean;
+    backgroundColor?: string
+    textColor?: string;
+    borderColor?: string;
+    borderRadius?: string;
+    fontSize?: string;
+    fontWeight?: string;
+    boxShadow?: string;
+  };
+
+  export interface ButtonPropsAsLink
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+}
+
+
 
 function Button({
   className,
@@ -54,18 +76,9 @@ function Button({
   boxShadow,
   style,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-    backgroundColor?: string
-    textColor?: string
-    borderColor?: string
-    borderRadius?: string
-    fontSize?: string
-    fontWeight?: string
-    boxShadow?: string
-  }) {
-  const Comp = asChild ? Slot : "button"
+}: ButtonProps
+ ) {
+  const Comp = asChild ? Slot : 'button';
 
   // Build custom styles object
   const customStyles: React.CSSProperties = {
@@ -73,13 +86,13 @@ function Button({
     ...(backgroundColor && { backgroundColor }),
     ...(textColor && { color: textColor }),
     ...(borderColor && { borderColor }),
-  }
+  };
 
   // Build custom classes
   const customClasses = [borderRadius, fontSize, fontWeight, boxShadow]
     .filter(Boolean)
     .join(' ')
-
+  ;
   return (
     <Comp
       data-slot="button"
@@ -88,7 +101,7 @@ function Button({
       style={customStyles}
       {...props}
     />
-  )
+  );
 }
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };

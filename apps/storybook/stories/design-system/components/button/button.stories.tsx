@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs';
 import { Loader2, Mail } from 'lucide-react';
 import type * as React from 'react';
 
+import { Star } from '@repo/design-system/components/icons/common';
 import { Badge } from '@repo/design-system/components/ui/badge';
 import { Button } from '@repo/design-system/components/ui/button';
 
@@ -356,14 +357,14 @@ export const Large: Story = {
  */
 export const Icon: Story = {
   render: (args) => (
-    <Button {...args}>
-      <Mail />
+    <Button {...args} onClick={() => alert('Button clicked')}>
+      <Star />
     </Button>
   ),
   args: {
     ...Secondary.args,
     size: 'icon',
-    children: <Mail />,
+    children: <Star />,
   },
 };
 
@@ -447,7 +448,7 @@ export const MultiTenantDemo: Story = {
               Large
             </Button>
             <Button {...args} size="icon">
-              <Mail className="h-4 w-4" />
+              <Star className="h-4 w-4" />
             </Button>
           </div>
         </div>

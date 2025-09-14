@@ -23,6 +23,7 @@ const config: StorybookConfig = {
     getAbsolutePath('@storybook/addon-interactions'),
     getAbsolutePath('@storybook/addon-a11y'),
     getAbsolutePath('@storybook/addon-docs'),
+    getAbsolutePath('msw-storybook-addon'),
   ],
   framework: {
     name: getAbsolutePath('@storybook/nextjs'),
